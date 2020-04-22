@@ -8,7 +8,11 @@ public class node
 
     public static void main(String args[])
     {
-        (new Listener()).start(); //start listening on node port
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter port number for your node! (Any number between 3000 and 8000)");
+        int nodePort = scan.nextInt();
+        scan.close();
+        (new Listener(nodePort)).start(); //start listening on node port
 
         try
         {
@@ -23,7 +27,7 @@ public class node
 
             while(true)
             {
-                String msg = "6539,Ping from Node.";
+                String msg = nodePort + ",Ping from Node.";
                 output.write(msg.getBytes()); //send message
                 System.out.println("Pinged Server");
                 Thread.sleep(2000);
@@ -37,14 +41,14 @@ public class node
 }
 class Listener extends Thread
 {
-    public Listener() {}
+    int port = 0;
+    public Listener(int x) { port = x; }
 
     public void run()
     {
         try
         {
             System.out.println("server not started!");
-            int port = 6539;
             ServerSocket server = new ServerSocket(port);
             System.out.println("server started!");
             Socket socket = server.accept();
