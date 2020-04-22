@@ -8,9 +8,7 @@ public class server
 
     public static void main(String args[])
     {
-        System.out.println("Thread not started!");
         (new Listener()).start();
-        System.out.println("Thread started!");        
 
         /*
         try
@@ -54,17 +52,13 @@ class Listener extends Thread
 
             DataInputStream input = new DataInputStream(socket.getInputStream());
 
-            //while(true)
-            //{
+            while(true)
+            {
                 byte[] buff = new byte[1024];
                 input.read(buff);
                 String read = new String(buff);
                 System.out.println(read);
-            //}
-
-            server.close();
-            socket.close();
-            input.close();
+            }
         } 
         catch (Exception e)
         {

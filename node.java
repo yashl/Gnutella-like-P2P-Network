@@ -21,15 +21,13 @@ public class node
             
             DataOutputStream output = new DataOutputStream(clientSocket.getOutputStream());
 
-            //while(true)
-            //{
+            while(true)
+            {
                 String msg = "6539,Ping from Node.";
                 output.write(msg.getBytes()); //send message
                 System.out.println("Pinged Server");
-                
-            //}
-            clientSocket.close();
-            output.close();
+                Thread.sleep(2000);
+            }
         }
         catch(Exception e)
         {
@@ -37,25 +35,29 @@ public class node
         }
     }
 }
-
 class Listener extends Thread
 {
+    public Listener() {}
+
     public void run()
     {
         try
         {
+            System.out.println("server not started!");
             int port = 6539;
             ServerSocket server = new ServerSocket(port);
+            System.out.println("server started!");
             Socket socket = server.accept();
 
             DataInputStream input = new DataInputStream(socket.getInputStream());
-            byte[] buff = new byte[1024];
-            input.read(buff);
-            String read = new String(buff);
-            System.out.println(read);
-            
-            socket.close();
-            server.close();
+
+            while(true)
+            {
+                byte[] buff = new byte[1024];
+                input.read(buff);
+                String read = new String(buff);
+                System.out.println(read);
+            }
         } 
         catch (Exception e)
         {
